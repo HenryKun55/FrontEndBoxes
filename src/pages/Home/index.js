@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Helmet} from "react-helmet";
 
 import {MdInsertDriveFile} from 'react-icons/md'
 import { withStyles } from '@material-ui/core/styles';
@@ -62,36 +63,39 @@ export default class Home extends Component {
 
   render() {
     return (
-        <div id="box-container">
-            <header>
-              <img alt="" src={logo}></img>
-              <h1>{this.state.box.title ? this.state.box.title : (<StyledProgress/>)}</h1>
-            </header>
+      <div id="box-container">
+        <Helmet>
+          <title>{ `Box - ${this.state.box.title} `}</title>
+        </Helmet>
+          <header>
+            <img alt="" src={logo}></img>
+            <h1>{this.state.box.title ? this.state.box.title : (<StyledProgress/>)}</h1>
+          </header>
 
-            <Dropzone onDropAccepted={this.handleUpload}>{
-                ({getRootProps, getInputProps}) => (
-                  <div className="upload" {... getRootProps()}>
-                    <input {... getInputProps()}/>
+          <Dropzone onDropAccepted={this.handleUpload}>{
+              ({getRootProps, getInputProps}) => (
+                <div className="upload" {... getRootProps()}>
+                  <input {... getInputProps()}/>
 
-                    <p>Arraste ou clique para adicionar um arquivo</p>
-                  </div>
-                )
-            }</Dropzone>
+                  <p>Arraste ou clique para adicionar um arquivo</p>
+                </div>
+              )
+          }</Dropzone>
 
-            <ul>
-              {this.state.box.files && this.state.box.files.map( file => (
-                <li key={file._id}> 
-                <a className="fileInfo" href={file.url} target="_blank" rel="noopener noreferrer">
-                  <MdInsertDriveFile size={24} color="rgb(187, 90, 90)"/>
-                  <strong>{file.title}</strong>
-                </a>
-                <span> há {" "}
-                {distanceInWords(file.createdAt, new Date(), {
-                  locale: pt
-                })}</span>
-              </li>
-              )) }
-            </ul>
+          <ul>
+            {this.state.box.files && this.state.box.files.map( file => (
+              <li key={file._id}> 
+              <a className="fileInfo" href={file.url} target="_blank" rel="noopener noreferrer">
+                <MdInsertDriveFile size={24} color="rgb(187, 90, 90)"/>
+                <strong>{file.title}</strong>
+              </a>
+              <span> há {" "}
+              {distanceInWords(file.createdAt, new Date(), {
+                locale: pt
+              })}</span>
+            </li>
+            )) }
+          </ul>
         </div>
     )
   }
